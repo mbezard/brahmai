@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Box, Newline, Text, useInput} from 'ink';
 import {Result} from 'meow';
 import {commands} from './commands.js';
+import {readState, writeState} from './store.js';
 
 type Props = {
 	cli: Result<{}>;
@@ -10,6 +11,11 @@ type Props = {
 export default function App({cli}: Props) {
 	const [status, setStatus] = useState<'idle' | 'busy'>('idle');
 	const [message, setMessage] = useState<string | null>(null);
+	const [count, setCount] = useState(readState().count);
+	const setAndWriteCount = (newCount: number) => {
+		setCount(newCount);
+		writeState({count: newCount});
+	};
 	useInput((input, key) => {
 		if (key.return) {
 			setStatus('busy');
@@ -23,6 +29,10 @@ export default function App({cli}: Props) {
 		}
 		if (input === '2') {
 			setMessage('Goodbye World');
+			return;
+		}
+		if (input === '3') {
+			setAndWriteCount(count + 1);
 			return;
 		}
 		if (input === 'h') {
@@ -40,6 +50,7 @@ export default function App({cli}: Props) {
 			</Text>
 			<Text>Input?:{cli.input}</Text>
 			<Text>Status:{status}</Text>
+			<Text>Count:{count}</Text>
 			<Newline />
 			<Box flexDirection="column">
 				{commands.map((command, index) => (

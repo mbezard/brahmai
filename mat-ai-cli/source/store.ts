@@ -1,14 +1,23 @@
 import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
+
+const globalStateDirectory = path.join(os.homedir(), '.ai-mat-cli');
+const stateFilePath = path.join(globalStateDirectory, 'state.json');
+
+// Ensure the directory exists
+if (!fs.existsSync(globalStateDirectory)) {
+	fs.mkdirSync(globalStateDirectory, {recursive: true});
+}
 
 interface AppState {
 	count: number;
 }
 
-const filePath = './state.json';
-
 export function readState(): AppState {
-	if (fs.existsSync(filePath)) {
-		const data = fs.readFileSync(filePath, 'utf8');
+	console.log('reading state');
+	if (fs.existsSync(stateFilePath)) {
+		const data = fs.readFileSync(stateFilePath, 'utf8');
 		return JSON.parse(data);
 	}
 	return {count: 0};
@@ -16,7 +25,7 @@ export function readState(): AppState {
 
 export function writeState(state: AppState) {
 	const data = JSON.stringify(state);
-	fs.writeFileSync(filePath, data, 'utf8');
+	fs.writeFileSync(stateFilePath, data, 'utf8');
 }
 
 // function main() {

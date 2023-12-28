@@ -5,4 +5,7 @@ export const commands = [
 	{
 		label: 'Say Goodbye',
 	},
+	{
+		label: 'Increment Count',
+	},
 ];
