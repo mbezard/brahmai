@@ -10,20 +10,14 @@ const cli = meow(
 	  $ mat-ai-cli
 
 	Options
-		--name  Your name
+		--help Display this message
 
 	Examples
-	  $ mat-ai-cli --name=Jane
-	  Hello, Jane
+	  $ mat-ai-cli
 `,
 	{
 		importMeta: import.meta,
-		flags: {
-			name: {
-				type: 'string',
-			},
-		},
 	},
 );
 
-render(<App name={cli.flags.name} />);
+render(<App cli={cli} />);
