@@ -14,8 +14,7 @@ interface AppState {
 	count: number;
 }
 
-export function readState(): AppState {
-	console.log('reading state');
+function readState(): AppState {
 	if (fs.existsSync(stateFilePath)) {
 		const data = fs.readFileSync(stateFilePath, 'utf8');
 		return JSON.parse(data);
@@ -23,20 +22,13 @@ export function readState(): AppState {
 	return {count: 0};
 }
 
-export function writeState(state: AppState) {
+function writeState(state: AppState) {
 	const data = JSON.stringify(state);
 	fs.writeFileSync(stateFilePath, data, 'utf8');
 }
 
-// function main() {
-//     let state = readState();
-//     console.log(`Current count is ${state.count}`);
+const clearState = () => {
+	fs.unlinkSync(stateFilePath);
+};
 
-//     // Modify state
-//     state.count++;
-
-//     writeState(state);
-//     console.log(`Count updated to ${state.count}`);
-// }
-
-// main();
+export const store = {readState, writeState, clearState};
