@@ -7,13 +7,13 @@ import App from './app.js';
 const cli = meow(
 	`
 	Usage
-	  $ cli
+	  $ mat-ai-cli
 
 	Options
 		--name  Your name
 
 	Examples
-	  $ cli --name=Jane
+	  $ mat-ai-cli --name=Jane
 	  Hello, Jane
 `,
 	{
