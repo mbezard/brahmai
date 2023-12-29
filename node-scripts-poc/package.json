@@ -11,5 +11,9 @@
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.14",
+    "dotenv": "^16.3.1"
   }
 }
