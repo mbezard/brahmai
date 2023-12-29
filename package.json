@@ -4,6 +4,8 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "cli"
+    "mat-ai-cli",
+    "all-ai",
+    "node-scripts-poc"
   ]
 }
