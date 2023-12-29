@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/main.ts"
+    "start": "ts-node src/mainNotion.ts"
   },
   "devDependencies": {
     "@types/node": "^20.10.2",
@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
-    "dotenv": "^16.3.1"
+    "all-ai": "*",
+    "dotenv": "^16.3.1",
+    "openai": "^4.24.1"
   }
 }
