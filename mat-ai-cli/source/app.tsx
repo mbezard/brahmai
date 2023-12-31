@@ -1,10 +1,11 @@
 import React from 'react';
-import {Box, Text} from 'ink';
+import {Box, Text, useInput} from 'ink';
 import {Result} from 'meow';
 import {TalkToAnyAgentScreen} from './modules/talkToAgent/TalkToAnyAgentScreen.js';
 import {Navigation} from './shared/navigation/components/Navigation.js';
 import {HumanTaskStackScreen} from './modules/humanTaskStack/SeeHumanTaskStackScreen.js';
 import {SettingsScreen} from './modules/settings/SettingsScreen.js';
+import {BreadCrumb} from './shared/navigation/components/BreadCrumb.js';
 
 type Props = {
 	cli: Result<{}>;
@@ -29,12 +30,18 @@ const screens = [
 ];
 
 export default function App({}: Props) {
+	useInput(input => {
+		if (input === 'q') {
+			process.exit();
+		}
+	});
 	return (
 		<Box flexDirection="column" width={64} height={16}>
 			<Text>
 				Welcome to ✨ AI-in-CLI ✨, PoC by <Text color="green">Matthieu</Text>
 			</Text>
-			<Navigation screens={screens} />
+			<BreadCrumb />
+			<Navigation screens={screens} navigationLevel={0} />
 		</Box>
 	);
 }

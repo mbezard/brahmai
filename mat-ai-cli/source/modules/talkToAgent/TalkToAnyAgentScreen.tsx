@@ -1,28 +1,24 @@
 import {agents} from 'all-ai';
 import {Box, Text} from 'ink';
 import React from 'react';
-import {useSelection} from '../../shared/useSelection.js';
+import {Navigation} from '../../shared/navigation/components/Navigation.js';
+import {Screen} from '../../shared/navigation/Screen.type.js';
 
 export const TalkToAnyAgentScreen = () => {
-	const {selectorIndex} = useSelection(Object.keys(agents).length);
+	const screens: Screen[] = Object.keys(agents).map(agent => ({
+		label: agent,
+		color: 'white',
+		component: <Text>{agent}</Text>,
+	}));
+
 	return (
-		<Box flexDirection="column" width={32} height={16}>
+		<Box flexDirection="column">
 			<Box flexDirection="column">
 				<Box>
 					<Text>Talk to:</Text>
 				</Box>
 				<Box flexDirection="column">
-					{Object.keys(agents).map((agent, index) => (
-						<Box key={agent}>
-							<Text>
-								{selectorIndex === index ? '> [' : '   '}
-								{index + 1}
-								{') '}
-								{agent}
-								{selectorIndex === index ? ']' : ' '}
-							</Text>
-						</Box>
-					))}
+					<Navigation screens={screens} navigationLevel={1} />
 				</Box>
 			</Box>
 		</Box>

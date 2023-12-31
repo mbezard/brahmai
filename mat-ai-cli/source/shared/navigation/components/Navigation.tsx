@@ -1,29 +1,36 @@
 import {Box, Newline, Text} from 'ink';
 import {useSelection} from '../../useSelection.js';
-import {BreadCrumb} from './BreadCrumb.js';
-import React from 'react';
-
-type Screen = {
-	label: string;
-	color: string;
-	component: JSX.Element;
-};
+import React, {useCallback} from 'react';
+import {useBreadCrumbStore} from './breadCrumbStore.js';
+import {Screen} from '../Screen.type.js';
 
 type Props = {
 	screens: Screen[];
+	navigationLevel: number; //TODO: refactor to have a global state
 };
 
-export const Navigation = ({screens}: Props) => {
-	const {selectedIndex: selectedScreenIndex, selectorIndex} = useSelection(
-		screens.length,
+export const Navigation = ({screens, navigationLevel}: Props) => {
+	const {paths, addPath, goBack} = useBreadCrumbStore();
+	const onSelect = useCallback(
+		(selectedIndex: number) => {
+			const screen = screens[selectedIndex];
+			if (!screen) return;
+			addPath(screen.label);
+		},
+		[screens, addPath],
 	);
-	const paths = [screens[selectedScreenIndex]?.label].filter<string>(
-		Boolean as any,
-	);
+
+	const isActive = navigationLevel + 1 === paths.length;
+
+	const {selectedIndex: selectedScreenIndex, selectorIndex} = useSelection({
+		numberOfOptions: screens.length,
+		onSelect,
+		onCancel: goBack,
+		isActive,
+	});
 
 	return (
 		<Box flexDirection="column">
-			<BreadCrumb paths={paths} />
 			{selectedScreenIndex === -1 && (
 				<Box flexDirection="column">
 					{screens.map((command, index) => (

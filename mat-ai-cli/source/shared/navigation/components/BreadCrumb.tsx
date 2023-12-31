@@ -1,21 +1,17 @@
 import {Box, Text} from 'ink';
 import React from 'react';
+import {useBreadCrumbStore} from './breadCrumbStore.js';
 
-type Props = {
-	paths: string[];
-};
-
-export const BreadCrumb = ({paths}: Props) => {
+export const BreadCrumb = () => {
+	const {paths} = useBreadCrumbStore();
 	return (
 		<Box flexDirection="row">
 			{paths.length > 0 && <Text>{'> '}</Text>}
 			{paths.map((path, index) => (
-				<Box key={path}>
-					<Text underline={index === paths.length - 1}>
-						{index === 0 ? '' : ' > '}
-						{path}
-					</Text>
-				</Box>
+				<Text key={path}>
+					{index === 0 ? '' : ' > '}
+					<Text underline={index === paths.length - 1}>{path}</Text>
+				</Text>
 			))}
 		</Box>
 	);
