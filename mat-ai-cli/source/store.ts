@@ -11,7 +11,21 @@ if (!fs.existsSync(globalStateDirectory)) {
 }
 
 interface AppState {
-	count: number;
+	notion: {
+		mainPageId: string;
+		dailyBoardDatabaseId: string;
+		epicBoardDatabaseId: string;
+		projectSpecificationsPageId: string;
+	};
+	humanTaskStack: Array<{
+		question: string;
+	}>;
+	promptHistory: Array<{
+		agentName: string;
+		question: string;
+		answer: string;
+		askedAt: Date;
+	}>;
 }
 
 function readState(): AppState {
@@ -19,7 +33,16 @@ function readState(): AppState {
 		const data = fs.readFileSync(stateFilePath, 'utf8');
 		return JSON.parse(data);
 	}
-	return {count: 0};
+	return {
+		notion: {
+			mainPageId: '',
+			dailyBoardDatabaseId: '',
+			epicBoardDatabaseId: '',
+			projectSpecificationsPageId: '',
+		},
+		humanTaskStack: [],
+		promptHistory: [],
+	};
 }
 
 function writeState(state: AppState) {
