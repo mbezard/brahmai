@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Text} from 'ink';
 import {Result} from 'meow';
 import {TalkToAnyAgentScreen} from './modules/talkToAgent/TalkToAnyAgentScreen.js';
-import {Navigation} from './modules/shared/navigation/components/Navigation.js';
+import {Navigation} from './shared/navigation/components/Navigation.js';
 
 type Props = {
 	cli: Result<{}>;
