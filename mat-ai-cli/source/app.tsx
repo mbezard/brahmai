@@ -3,6 +3,8 @@ import {Box, Text} from 'ink';
 import {Result} from 'meow';
 import {TalkToAnyAgentScreen} from './modules/talkToAgent/TalkToAnyAgentScreen.js';
 import {Navigation} from './shared/navigation/components/Navigation.js';
+import {HumanTaskStackScreen} from './modules/humanTaskStack/SeeHumanTaskStackScreen.js';
+import {SettingsScreen} from './modules/settings/SettingsScreen.js';
 
 type Props = {
 	cli: Result<{}>;
@@ -17,7 +19,12 @@ const screens = [
 	{
 		label: 'See the human task stack',
 		color: 'red',
-		component: <Box />,
+		component: <HumanTaskStackScreen />,
+	},
+	{
+		label: 'Settings',
+		color: 'blue',
+		component: <SettingsScreen />,
 	},
 ];
 
