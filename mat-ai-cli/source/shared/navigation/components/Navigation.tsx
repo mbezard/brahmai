@@ -1,5 +1,5 @@
 import {Box, Newline, Text} from 'ink';
-import {useNavigation} from '../useNavigation.js';
+import {useSelection} from '../../useSelection.js';
 import {BreadCrumb} from './BreadCrumb.js';
 import React from 'react';
 
@@ -14,7 +14,9 @@ type Props = {
 };
 
 export const Navigation = ({screens}: Props) => {
-	const {selectedScreenIndex, selectorIndex} = useNavigation(screens.length);
+	const {selectedIndex: selectedScreenIndex, selectorIndex} = useSelection(
+		screens.length,
+	);
 	const paths = [screens[selectedScreenIndex]?.label].filter<string>(
 		Boolean as any,
 	);

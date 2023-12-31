@@ -1,17 +1,28 @@
-import {Box, Newline, Text} from 'ink';
+import {agents} from 'all-ai';
+import {Box, Text} from 'ink';
 import React from 'react';
+import {useSelection} from '../../shared/useSelection.js';
 
 export const TalkToAnyAgentScreen = () => {
+	const {selectorIndex} = useSelection(Object.keys(agents).length);
 	return (
 		<Box flexDirection="column" width={32} height={16}>
-			<Text>Welcome to 1st screen : Talk to any agent, PoC by </Text>
-			<Newline />
 			<Box flexDirection="column">
 				<Box>
-					<Text>[1) Talk to any agent]</Text>
+					<Text>Talk to:</Text>
 				</Box>
-				<Box>
-					<Text>[2) See the human task stack]</Text>
+				<Box flexDirection="column">
+					{Object.keys(agents).map((agent, index) => (
+						<Box key={agent}>
+							<Text>
+								{selectorIndex === index ? '> [' : '   '}
+								{index + 1}
+								{') '}
+								{agent}
+								{selectorIndex === index ? ']' : ' '}
+							</Text>
+						</Box>
+					))}
 				</Box>
 			</Box>
 		</Box>
