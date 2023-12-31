@@ -1,69 +1,82 @@
 import React, {useState} from 'react';
 import {Box, Newline, Text, useInput} from 'ink';
 import {Result} from 'meow';
-import {commands} from './commands.js';
-import {store} from './store.js';
+import {TalkToAnyAgentScreen} from './ui/TalkToAnyAgentScreen.js';
+import {BreadCrumb} from './ui/shared/BreadCrumb.js';
 
 type Props = {
 	cli: Result<{}>;
 };
 
-export default function App({cli}: Props) {
-	const [count, setCount] = useState(store.readState().count);
+const screens = [
+	{
+		label: 'Talk to any agent',
+		color: 'green',
+		component: <TalkToAnyAgentScreen />,
+	},
+	{
+		label: 'See the human task stack',
+		color: 'red',
+	},
+];
+
+export default function App({}: Props) {
 	const [selectorIndex, setSelectorIndex] = useState(-1);
-	const setAndWriteCount = (newCount: number) => {
-		setCount(newCount);
-		store.writeState({count: newCount});
-	};
+	const [selectedScreenIndex, setSelectedScreenIndex] = useState(-1);
+
 	useInput((input, key) => {
-		if (key.downArrow) {
-			setSelectorIndex(prevSelector =>
-				Math.min(commands.length - 1, prevSelector + 1),
-			);
-		}
-		if (key.upArrow) {
-			setSelectorIndex(prevSelector => Math.max(0, prevSelector - 1));
-		}
-		if (key.return) {
-			switch (selectorIndex) {
-				case 0:
-					setAndWriteCount(count + 1);
-			}
-		}
-		if (input === 'c') {
-			store.clearState();
-			return;
-		}
-		if (input === '1') {
-			setAndWriteCount(count + 1);
-			return;
-		}
 		if (input === 'q') {
 			process.exit();
 		}
+
+		if (selectedScreenIndex === -1) {
+			if (key.downArrow) {
+				setSelectorIndex(prevSelector =>
+					Math.min(screens.length - 1, prevSelector + 1),
+				);
+			}
+			if (key.upArrow) {
+				setSelectorIndex(prevSelector => Math.max(0, prevSelector - 1));
+			}
+			if (key.return || key.rightArrow) {
+				setSelectedScreenIndex(selectorIndex);
+			}
+			return;
+		}
+		if (key.leftArrow) {
+			setSelectedScreenIndex(-1);
+			return;
+		}
 	});
+
+	const paths = [screens[selectedScreenIndex]?.label].filter<string>(
+		Boolean as any,
+	);
+
 	return (
-		<Box flexDirection="column">
+		<Box flexDirection="column" width={64} height={16}>
 			<Text>
 				Welcome to ✨ AI-in-CLI ✨, PoC by <Text color="green">Matthieu</Text>
 			</Text>
-			<Text>Input?:{cli.input}</Text>
-			<Text>Count:{count}</Text>
+			<BreadCrumb paths={paths} />
 			<Newline />
-			<Box flexDirection="column">
-				{commands.map((command, index) => (
-					<Box key={command.label}>
-						<Text>
-							{selectorIndex === index ? '> [' : '   '}
-							{index + 1}
-							{') '}
-							{command.label}
-							{selectorIndex === index ? ']' : ' '}
-						</Text>
-					</Box>
-				))}
-			</Box>
+			{selectedScreenIndex === -1 && (
+				<Box flexDirection="column">
+					{screens.map((command, index) => (
+						<Box key={command.label}>
+							<Text>
+								{selectorIndex === index ? '> [' : '   '}
+								{index + 1}
+								{') '}
+								{command.label}
+								{selectorIndex === index ? ']' : ' '}
+							</Text>
+						</Box>
+					))}
+				</Box>
+			)}
 			<Newline />
+			{screens[selectedScreenIndex]?.component}
 		</Box>
 	);
 }
