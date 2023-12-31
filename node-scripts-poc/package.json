@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/mainNotion.ts"
+    "start": "ts-node src/mainNotion.ts",
+    "openai": "ts-node src/mainOpenAi.ts"
   },
   "devDependencies": {
     "@types/node": "^20.10.2",
