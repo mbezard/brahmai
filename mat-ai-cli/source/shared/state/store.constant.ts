@@ -9,6 +9,10 @@ export const analyticsFilePath = path.join(
 	globalStateDirectory,
 	'analytics.json',
 );
+export const settingsFilePath = path.join(
+	globalStateDirectory,
+	'settings.json',
+);
 
 // Ensure the directory exists
 if (!fs.existsSync(globalStateDirectory)) {
@@ -16,9 +20,13 @@ if (!fs.existsSync(globalStateDirectory)) {
 }
 
 // Ensure the files exists
-if (!fs.existsSync(stateFilePath)) {
-	fs.writeFileSync(stateFilePath, '{}', 'utf8');
-}
-if (!fs.existsSync(analyticsFilePath)) {
-	fs.writeFileSync(analyticsFilePath, '[]', 'utf8');
-}
+// MIGHT NOT BE NEEDED
+// if (!fs.existsSync(stateFilePath)) {
+// 	fs.writeFileSync(stateFilePath, '{}', 'utf8');
+// }
+// if (!fs.existsSync(analyticsFilePath)) {
+// 	fs.writeFileSync(analyticsFilePath, '[]', 'utf8');
+// }
+// if (!fs.existsSync(settingsFilePath)) {
+// 	fs.writeFileSync(settingsFilePath, '{}', 'utf8');
+// }
