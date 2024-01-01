@@ -1,14 +1,5 @@
 import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
-
-const globalStateDirectory = path.join(os.homedir(), '.mat-ai-cli');
-const stateFilePath = path.join(globalStateDirectory, 'state.json');
-
-// Ensure the directory exists
-if (!fs.existsSync(globalStateDirectory)) {
-	fs.mkdirSync(globalStateDirectory, {recursive: true});
-}
+import {stateFilePath} from './store.constant.js';
 
 interface AppState {
 	notion: {
