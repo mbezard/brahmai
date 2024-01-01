@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import {store} from '../../store.js';
+import {store} from '../../shared/state/store.js';
 import {Box, Text} from 'ink';
 import React from 'react';
 

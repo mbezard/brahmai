@@ -1,6 +1,6 @@
 import {Box, Text, useInput} from 'ink';
 import React from 'react';
-import {store} from '../../store.js';
+import {store} from '../../shared/state/store.js';
 
 export const SettingsScreen = () => {
 	useInput(input => {
