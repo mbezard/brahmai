@@ -35,7 +35,7 @@ export const readPage = async () => {
 //   Name: ""
 // };
 
-const main = async () => {
+export const queryDatabase = async () => {
   const { results } = await notion.databases.query({
     database_id: "b12b3beb97c94b73b7a519dfd46f17d2",
     // filter: {
@@ -60,5 +60,45 @@ const main = async () => {
     })
   );
 };
+
+export const readDatabaseInfo = async () => {
+  const { properties } = await notion.databases.retrieve({
+    database_id: "b12b3beb97c94b73b7a519dfd46f17d2",
+  });
+
+  Object.values(properties).forEach((property) => {
+    switch (property.type) {
+      case "title":
+        console.log(property.name, "Title");
+        break;
+
+      case "select":
+        console.log(
+          property.name,
+          "Select",
+          property.select.options.map((option) => option.name)
+        );
+        break;
+
+      case "multi_select":
+        console.log(
+          property.name,
+          "MultiSelect",
+          property.multi_select.options.map((option) => option.name)
+        );
+        break;
+
+      case "status":
+        console.log(
+          property.name,
+          "Status",
+          property.status.options.map((option) => option.name)
+        );
+        break;
+    }
+  });
+};
+
+const main = async () => {};
 
 main();
