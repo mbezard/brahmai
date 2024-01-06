@@ -38,7 +38,7 @@ export default function App({}: Props) {
 	return (
 		<Box flexDirection="column" width={64} height={16}>
 			<Text>
-				Welcome to ✨ AI-in-CLI ✨, PoC by <Text color="green">Matthieu</Text>
+				Welcome to ✨ BrahmAI ✨, PoC by <Text color="green">Matthieu</Text>
 			</Text>
 			<BreadCrumb />
 			<Navigation screens={screens} navigationLevel={0} />
