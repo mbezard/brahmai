@@ -23,7 +23,9 @@ export const getTextContentOfBlockFromId = async (
   return content.join("\n");
 };
 
-const getTextContentOfBlockWithoutChildren = (block: BlockObjectResponse) => {
+const getTextContentOfBlockWithoutChildren = (
+  block: BlockObjectResponse
+): string => {
   switch (block.type) {
     case "paragraph":
       return block.paragraph.rich_text.map((text) => text.plain_text).join("");
@@ -54,10 +56,19 @@ const getTextContentOfBlockWithoutChildren = (block: BlockObjectResponse) => {
         .map((text) => "- [ ] " + text.plain_text)
         .join("");
     case "toggle":
-      return block.toggle.rich_text.map((text) => "- " + text.plain_text);
+      return block.toggle.rich_text
+        .map((text) => "- " + text.plain_text)
+        .join("");
     case "child_page":
       return `[${block.child_page.title}]()`;
+    case "code":
+      return (
+        "```\n" +
+        block.code.rich_text.map((text) => text.plain_text).join("") +
+        "\n```"
+      );
     default:
-      return "<unknown>";
+      console.error("Unknown block type: ", block.type);
+      return "";
   }
 };
