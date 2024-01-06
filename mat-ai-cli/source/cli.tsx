@@ -7,13 +7,13 @@ import App from './app.js';
 const cli = meow(
 	`
 	Usage
-	  $ mat-ai-cli
+	  $ brahmai-cli
 
 	Options
 		--help Display this message
 
 	Examples
-	  $ mat-ai-cli
+	  $ brahmai-cli
 `,
 	{
 		importMeta: import.meta,

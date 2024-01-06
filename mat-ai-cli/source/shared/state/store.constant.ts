@@ -2,7 +2,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs';
 
-const globalStateDirectory = path.join(os.homedir(), '.mat-ai-cli');
+const globalStateDirectory = path.join(os.homedir(), '.brahmai-cli');
 
 export const stateFilePath = path.join(globalStateDirectory, 'state.json');
 export const analyticsFilePath = path.join(

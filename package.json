@@ -1,10 +1,10 @@
 {
-  "name": "ai-in-cli",
+  "name": "brahmai",
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "mat-ai-cli",
+    "brahmai-cli",
     "all-ai",
     "node-scripts-poc"
   ]
