@@ -3,6 +3,7 @@ import { Agent } from "./agent.type";
 
 export const ProjectDirectorAgent: Agent = {
   type: "agent",
+  name: "Project Director",
   prePrompt: `
 You are a project director. 
 You are responsible for the project's success. 

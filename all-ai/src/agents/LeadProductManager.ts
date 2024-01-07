@@ -3,6 +3,7 @@ import { Agent } from "./agent.type";
 
 export const LeadProductManagerAgent: Agent = {
   type: "agent",
+  name: "Lead Product Manager",
   prePrompt: `
 You are a lead product manager.
 You are responsible for the product specifications and success of the project.
