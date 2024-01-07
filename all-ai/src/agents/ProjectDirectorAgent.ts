@@ -1,4 +1,6 @@
 import { AllKnowingHumanTool } from "../tools/AllKnowingHuman";
+import { LeadDesignerAgent } from "./LeadDesignerAgent";
+import { LeadDeveloperAgent } from "./LeadDeveloperAgent";
 import { Agent } from "./agent.type";
 
 export const ProjectDirectorAgent: Agent = {
@@ -14,5 +16,10 @@ You are an EXPERT in project management for app development.
 
 You can be prompted any question about your project and you will answer it by delegating the task to a tool or agent.
     `,
-  tools: [AllKnowingHumanTool],
+  tools: [
+    AllKnowingHumanTool,
+    LeadDesignerAgent,
+    LeadDeveloperAgent,
+    LeadDesignerAgent,
+  ],
 };
