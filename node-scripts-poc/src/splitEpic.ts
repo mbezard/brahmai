@@ -3,6 +3,7 @@ import { OpenAI } from "openai";
 import { getTextContentOfBlockFromId } from "./getTextContentOfBlock";
 import { Client } from "@notionhq/client";
 import { getUserStoriesFromEpic } from "./getUserStoriesFromEpic";
+import { createUserStoriesCardsInNotion } from "./createUserStoriesCardsInNotion";
 dotenv.config();
 
 const openai = new OpenAI({
@@ -40,7 +41,12 @@ export const splitEpic = async ({
     "As a data engineer, I want to orchestrate the creation of the MSSQL and the dump job using Prefect.",
     "As a data engineer, I want to ensure the compatibility of the dump with MSSQL versions (2012, 2016, 2017, 2019).",
   ];
-  console.log(userStories);
+
+  createUserStoriesCardsInNotion({
+    notion,
+    userStories,
+    userStoriesDatabaseId: ticketsNotionDatabaseId,
+  });
 };
 
 splitEpic({
