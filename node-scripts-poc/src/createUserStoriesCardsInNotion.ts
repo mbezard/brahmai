@@ -11,15 +11,13 @@ export const createUserStoriesCardsInNotion = async ({
   userStories,
   userStoriesDatabaseId,
 }: Params) => {
-  Promise.all(
-    userStories.map(async (userStory) => {
-      notion.pages.create({
-        parent: { database_id: userStoriesDatabaseId },
-        properties: {
-          Name: { title: [{ text: { content: userStory } }] },
-          Status: { status: { name: "Backlog" } },
-        },
-      });
-    })
-  );
+  for (const userStory of userStories) {
+    await notion.pages.create({
+      parent: { database_id: userStoriesDatabaseId },
+      properties: {
+        Name: { title: [{ text: { content: userStory } }] },
+        Status: { status: { name: "Backlog" } },
+      },
+    });
+  }
 };
