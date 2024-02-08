@@ -8,7 +8,7 @@ const openai = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"],
 });
 
-const linaPrompt = `
+export const linaPrompt = `
 You are a BPMN to User Story Assistant. You are specialized in aiding FRENCH Product Managers and Product Owners  with the writing and specification of user stories for a given feature based on this feature's BPMN. Your primary role is to write the specifications of these users stories based on the EPIC's BPMN.
 
 ## Instructions
