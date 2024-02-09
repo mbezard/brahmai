@@ -1,9 +1,7 @@
 import OpenAI from "openai";
 import * as fs from "fs";
-import { PDFDocument } from "pdf-lib";
 import { config } from "dotenv";
-import { linaPrompt } from "./mainSplitFromBpmn";
-import { Run } from "openai/resources/beta/threads/runs/runs";
+import { linaPrompt } from "./linaPrompt";
 config();
 
 const openai = new OpenAI({
@@ -20,10 +18,8 @@ const main = async () => {
 
   const assistant = await openai.beta.assistants.create({
     name: "BPMN to User Story Assistant",
-    model: "gpt-4-turbo",
+    model: "gpt-4-turbo-preview",
     instructions: linaPrompt,
-    // file_ids: [openaiFile.id],
-    // tools: [{ type: "retrieval" }],
   });
 
   const thread = await openai.beta.threads.create();
@@ -37,8 +33,16 @@ const main = async () => {
     assistant_id: assistant.id,
   });
 
-  let status: Run.status = "running";
-  while (status === "running") {
+  let status:
+    | "queued"
+    | "in_progress"
+    | "requires_action"
+    | "cancelling"
+    | "cancelled"
+    | "failed"
+    | "completed"
+    | "expired" = "queued";
+  while (status !== "completed") {
     const runUpdated = await openai.beta.threads.runs.retrieve(
       thread.id,
       run.id
@@ -47,6 +51,10 @@ const main = async () => {
     console.log("Status", status);
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
+
+  const messages = await openai.beta.threads.messages.list(thread.id);
+
+  console.log("Messages", JSON.stringify(messages.data));
 
   // Clean up
   await openai.files.del(openaiFile.id);
