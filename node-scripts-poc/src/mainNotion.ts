@@ -1,6 +1,6 @@
 import { Client, isFullPage } from "@notionhq/client";
 import * as dotenv from "dotenv";
-import { getTextContentOfBlockFromId } from "./getTextContentOfBlock";
+import { getTextContentOfBlockFromId } from "./notion/getTextContentOfBlock";
 dotenv.config();
 
 const notion = new Client({

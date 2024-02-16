@@ -1,9 +1,9 @@
 import * as dotenv from "dotenv";
 import { OpenAI } from "openai";
-import { getTextContentOfBlockFromId } from "./getTextContentOfBlock";
+import { getTextContentOfBlockFromId } from "./notion/getTextContentOfBlock";
 import { Client } from "@notionhq/client";
 import { getUserStoriesFromEpic } from "./getUserStoriesFromEpic";
-import { createUserStoriesCardsInNotion } from "./createUserStoriesCardsInNotion";
+import { createUserStoriesCardsInNotion } from "./notion/createUserStoriesCardsInNotion";
 dotenv.config();
 
 const openai = new OpenAI({

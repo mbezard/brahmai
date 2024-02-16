@@ -1,5 +1,5 @@
 import { Client } from "@notionhq/client";
-import { getTextContentOfBlockFromId } from "./getTextContentOfBlock";
+import { getTextContentOfBlockFromId } from "./notion/getTextContentOfBlock";
 import OpenAI from "openai";
 
 const prePrompt = "You are an expert Product Manager";
