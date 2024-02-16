@@ -1,5 +1,3 @@
-import { OpenAI } from "openai";
-import { config } from "dotenv";
 import { prompt } from "./prompt";
 import { exploringFunctions, notionFunctions } from "./functions";
 import {
@@ -8,11 +6,7 @@ import {
 } from "openai/resources";
 import { executeFunction } from "./executeFunction";
 import { isFunctionName } from "./functions.type";
-config();
-
-const openai = new OpenAI({
-  apiKey: process.env["OPENAI_API_KEY"],
-});
+import { openai } from "./clients";
 
 const tools: ChatCompletionTool[] = [
   ...exploringFunctions.map<ChatCompletionTool>((f) => ({
@@ -48,10 +42,14 @@ const main = async () => {
     });
 
     console.log("[OPENAI] Finish reason", openaiChoice.finish_reason);
+    if (openaiChoice.finish_reason === "stop") {
+      break;
+    }
 
     if (openaiChoice.finish_reason === "tool_calls") {
-      console.log("Function call", openaiChoice.message.tool_calls);
+      console.log("[OPENAI] Some functions have been called");
       for (const toolCall of openaiChoice.message.tool_calls || []) {
+        console.log("[OPENAI] Tool call", toolCall);
         if (!isFunctionName(toolCall.function.name))
           throw new Error("Invalid function name");
         const functionOutput = await executeFunction(
@@ -65,7 +63,8 @@ const main = async () => {
           tool_call_id: toolCall.id,
         });
       }
-      console.log("[OPENAI] OpenAI message", openaiChoice.message.content);
+      if (openaiChoice.message.content)
+        console.log("[OPENAI] OpenAI message: ", openaiChoice.message.content);
     }
   }
 };

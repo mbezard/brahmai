@@ -1,11 +1,8 @@
 import { exec } from "child_process";
 import { FunctionName } from "./functions.type";
 import { getTextContentOfBlockFromId } from "../notion/getTextContentOfBlock";
-import { Client } from "@notionhq/client";
-
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-});
+import { notion } from "./clients";
+import { projectDir } from "./constant";
 
 export const executeFunction = async (
   functionName: FunctionName,
@@ -14,7 +11,9 @@ export const executeFunction = async (
   switch (functionName) {
     case "lsFunction":
       const path = getPathFromParameters(parameters);
-      const output = execCommand(`ls ${path}`);
+      const output = execCommand(
+        `tree --gitignore --filesfirst -I dist/ -I build/ -I node_modules/ -L 2 ${path}`
+      );
       return output;
 
     case "catFunction":
@@ -22,11 +21,17 @@ export const executeFunction = async (
       const fileContent = execCommand(`cat ${filePath}`);
       return fileContent;
     case "readNotionPageFunction":
-      const pageId = getPageIdFromParameters(parameters);
-      const pageContent = getTextContentOfBlockFromId(pageId, notion);
+      const readPageId = getPageIdFromParameters(parameters);
+      const pageContent = getTextContentOfBlockFromId(readPageId, notion);
       return pageContent;
     case "writeNotionPageFunction":
-      return "writeNotionPageFunction";
+      const content = getNotionPageContentFromParameters(parameters);
+      const writePageId = getPageIdFromParameters(parameters);
+
+      console.log("Writing to Notion page", writePageId);
+      console.log("Content", content);
+
+      return "";
     default:
       throw new Error("Function not found");
   }
@@ -54,10 +59,22 @@ const getPageIdFromParameters = (parameters: unknown): string => {
   return parameters.pageId;
 };
 
+const getNotionPageContentFromParameters = (parameters: unknown): string => {
+  if (
+    typeof parameters !== "object" ||
+    parameters === null ||
+    !("content" in parameters) ||
+    typeof parameters.content !== "string"
+  )
+    throw new Error("Invalid parameters");
+  return parameters.content;
+};
+
 const execCommand = (command: string): Promise<string> => {
   return new Promise((resolve) => {
-    exec(command, (error, stdout, stderr) => {
+    exec(command, { cwd: projectDir }, (error, stdout, stderr) => {
       if (error) {
+        console.error("Error", error);
         if (stderr) {
           resolve(stderr);
         }
