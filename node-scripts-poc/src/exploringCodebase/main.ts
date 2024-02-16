@@ -1,49 +1,73 @@
 import { OpenAI } from "openai";
 import { config } from "dotenv";
-import { Client } from "@notionhq/client";
 import { prompt } from "./prompt";
 import { exploringFunctions, notionFunctions } from "./functions";
-import { ChatCompletionTool } from "openai/resources";
+import {
+  ChatCompletionMessageParam,
+  ChatCompletionTool,
+} from "openai/resources";
+import { executeFunction } from "./executeFunction";
+import { isFunctionName } from "./functions.type";
 config();
 
 const openai = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"],
 });
 
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-});
+const tools: ChatCompletionTool[] = [
+  ...exploringFunctions.map<ChatCompletionTool>((f) => ({
+    type: "function",
+    function: f,
+  })),
+  ...notionFunctions.map<ChatCompletionTool>((f) => ({
+    type: "function",
+    function: f,
+  })),
+];
 
-const notionMainPageId = "7c26ee89bffb43e0bf2595c9e26dd1c5";
 const main = async () => {
-  const openaiResponse = await openai.chat.completions.create({
-    model: "gpt-4-turbo-preview",
-    messages: [
-      { role: "system", content: prompt },
-      {
-        role: "user",
-        content: "Give me the list of the modules of my project",
-      },
-    ],
-    tools: [
-      ...exploringFunctions.map<ChatCompletionTool>((f) => ({
-        type: "function",
-        function: f,
-      })),
-      ...notionFunctions.map<ChatCompletionTool>((f) => ({
-        type: "function",
-        function: f,
-      })),
-    ],
-  });
-  const openaiChoice = openaiResponse.choices[0];
+  const messages: ChatCompletionMessageParam[] = [
+    { role: "system", content: prompt },
+    {
+      role: "user",
+      content: "Give me the list of the modules of my project",
+    },
+  ];
 
-  console.log("Finish reason", openaiChoice.finish_reason);
+  for (let i = 0; i < 4; i++) {
+    console.log("----- Iteration", i, "-----");
+    const openaiResponse = await openai.chat.completions.create({
+      model: "gpt-4-turbo-preview",
+      messages,
+      tools,
+    });
+    const openaiChoice = openaiResponse.choices[0];
+    messages.push({
+      role: "assistant",
+      tool_calls: openaiChoice.message.tool_calls,
+    });
 
-  if (openaiChoice.finish_reason === "tool_calls") {
-    console.log("Function call", openaiChoice.message.tool_calls);
+    console.log("[OPENAI] Finish reason", openaiChoice.finish_reason);
+
+    if (openaiChoice.finish_reason === "tool_calls") {
+      console.log("Function call", openaiChoice.message.tool_calls);
+      for (const toolCall of openaiChoice.message.tool_calls || []) {
+        if (!isFunctionName(toolCall.function.name))
+          throw new Error("Invalid function name");
+        const functionOutput = await executeFunction(
+          toolCall.function.name,
+          JSON.parse(toolCall.function.arguments)
+        );
+        console.log("Function output", functionOutput);
+        messages.push({
+          role: "tool",
+          content: functionOutput,
+          tool_call_id: toolCall.id,
+        });
+      }
+      console.log("[OPENAI] OpenAI message", openaiChoice.message.content);
+    }
   }
-  console.log("OpenAI message", openaiChoice.message.content);
 };
 
 main();

@@ -1,3 +1,5 @@
+import { notionMainPageId } from "./constant";
+
 export const prompt = `
 # Mission
 You are a software developer who's goal is to document the project codebase.
@@ -11,6 +13,8 @@ You are given a codebase to explore and document. You can explore it using the f
 
 To call each command you need to provide the path to the file or directory you want to explore. 
 You MUST use relative paths.
+You always start at the root of the project.
+Make sure the path is correct and the file or directory exists.
 
 
 # Instructions
@@ -33,5 +37,7 @@ The Notion should have the following structure:
     - The architecture
     - The main screens
     - The main modules
+
+Here is the notion id of the page you should edit: ${notionMainPageId}
 
 `;

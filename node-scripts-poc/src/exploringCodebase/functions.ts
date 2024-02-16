@@ -40,7 +40,7 @@ const readNotionPageFunction: FunctionDefinition = {
       },
     },
   },
-};
+} as const;
 
 const writeNotionPageFunction: FunctionDefinition = {
   name: "writeNotionPageFunction",
