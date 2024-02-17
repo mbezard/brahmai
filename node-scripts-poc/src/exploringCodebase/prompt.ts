@@ -12,9 +12,11 @@ You are given a codebase to explore and document. You can explore it using the f
 - CAT command
 
 To call each command you need to provide the path to the file or directory you want to explore. 
-You MUST use relative paths.
-You always start at the root of the project.
-Make sure the path is correct and the file or directory exists.
+Rules :
+- You MUST use relative paths.
+- You always start at the root of the project with the path ".".
+- Make sure the path is correct and the file or directory exists. NEVER call the command with a path that doesn't exist.
+- DO NOT try to call the command with a path you are not sure of.
 
 
 # Instructions
@@ -39,5 +41,9 @@ The Notion should have the following structure:
     - The main modules
 
 Here is the notion id of the page you should edit: ${notionMainPageId}
+
+
+Extra :
+Be concise and go straight to the point. Fully answer the question but do not add any extra information.
 
 `;

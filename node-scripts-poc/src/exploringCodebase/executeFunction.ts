@@ -31,7 +31,7 @@ export const executeFunction = async (
       console.log("Writing to Notion page", writePageId);
       console.log("Content", content);
 
-      return "";
+      return "CONTENT WRITTEN TO NOTION PAGE";
     default:
       throw new Error("Function not found");
   }
@@ -74,7 +74,6 @@ const execCommand = (command: string): Promise<string> => {
   return new Promise((resolve) => {
     exec(command, { cwd: projectDir }, (error, stdout, stderr) => {
       if (error) {
-        console.error("Error", error);
         if (stderr) {
           resolve(stderr);
         }

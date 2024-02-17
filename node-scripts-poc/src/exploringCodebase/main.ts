@@ -24,11 +24,14 @@ const main = async () => {
     { role: "system", content: prompt },
     {
       role: "user",
-      content: "Give me the list of the modules of my project",
+      content: "What does the header of the app contains ?",
+      //   content: "What does the header of the app contains ?",
+      //   content: "What's the list of the modules ?",
+      //   content: "What's the list of the components used in the Home screen component (in the return part) ?",
     },
   ];
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 10; i++) {
     console.log("----- Iteration", i, "-----");
     const openaiResponse = await openai.chat.completions.create({
       model: "gpt-4-turbo-preview",
@@ -42,9 +45,6 @@ const main = async () => {
     });
 
     console.log("[OPENAI] Finish reason", openaiChoice.finish_reason);
-    if (openaiChoice.finish_reason === "stop") {
-      break;
-    }
 
     if (openaiChoice.finish_reason === "tool_calls") {
       console.log("[OPENAI] Some functions have been called");
@@ -63,8 +63,13 @@ const main = async () => {
           tool_call_id: toolCall.id,
         });
       }
-      if (openaiChoice.message.content)
-        console.log("[OPENAI] OpenAI message: ", openaiChoice.message.content);
+    }
+
+    if (openaiChoice.message.content)
+      console.log("[OPENAI] OpenAI message: ", openaiChoice.message.content);
+
+    if (openaiChoice.finish_reason === "stop") {
+      break;
     }
   }
 };
