@@ -4,6 +4,9 @@ import { Textarea } from "./components/ui/textarea";
 import { defaultPrompt, defaultQuestion } from "./defaultPrompt";
 import { useLlm } from "./useLlm";
 import { Button } from "./components/ui/button";
+import Markdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark as style } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 function App() {
   const [prompt, setPrompt] = useState(defaultPrompt);
@@ -14,7 +17,7 @@ function App() {
   };
   return (
     <div className="p-5">
-      <h3>LLM testing</h3>
+      <h1 className="text-center">LLM testing</h1>
       <div className="flex flex-col items-center">
         <div className="w-full">LLM's prompt</div>
         <Textarea
@@ -53,7 +56,34 @@ type ResultProps = {
 };
 
 const Result = ({ result }: ResultProps) => {
-  return <div>{result}</div>;
+  return (
+    <div>
+      <Markdown
+        components={{
+          code: (props) => {
+            const { children, className, ...rest } = props;
+            const match = /language-(\w+)/.exec(className || "");
+            return match ? (
+              // @ts-expect-error - I don't know how to fix this
+              <SyntaxHighlighter
+                {...rest}
+                PreTag="div"
+                children={String(children).replace(/\n$/, "")}
+                language={match[1]}
+                style={style}
+              />
+            ) : (
+              <code {...rest} className={className}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      >
+        {result}
+      </Markdown>
+    </div>
+  );
 };
 
 export default App;
