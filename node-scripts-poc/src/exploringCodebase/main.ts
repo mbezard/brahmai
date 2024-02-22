@@ -24,10 +24,11 @@ const main = async () => {
     { role: "system", content: prompt },
     {
       role: "user",
-      content: "What does the header of the app contains ?",
+      //   content: "What does the header of the app contains ?",
       //   content: "What does the header of the app contains ?",
       //   content: "What's the list of the modules ?",
-      //   content: "What's the list of the components used in the Home screen component (in the return part) ?",
+      content:
+        "What's the list of the components used in the Home screen component (in the return part) ?",
     },
   ];
 
