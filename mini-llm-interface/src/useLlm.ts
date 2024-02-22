@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { useState } from "react";
 
 const openai = new OpenAI({
-  apiKey: "",
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY || "",
   dangerouslyAllowBrowser: true,
 });
 const NUMBER_OF_PARALLEL_REQUESTS = 4;
