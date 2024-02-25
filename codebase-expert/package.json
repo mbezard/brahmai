@@ -16,10 +16,14 @@
 		"dist"
 	],
 	"dependencies": {
+		"@tanstack/react-query": "^5.24.1",
 		"dotenv": "^16.4.5",
+		"ignore": "^5.3.1",
 		"ink": "^4.1.0",
 		"meow": "^11.0.0",
-		"react": "^18.2.0"
+		"openai": "4.28.0",
+		"react": "^18.2.0",
+		"zustand": "^4.5.1"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^3.0.1",
