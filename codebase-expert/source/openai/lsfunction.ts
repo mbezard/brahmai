@@ -74,23 +74,32 @@ export const getDirectoryTree = (
 	return tree;
 };
 
-export const printTree = (
+const printTree = (
 	node: TreeNode,
 	prefix: string = '',
 	isLast: boolean = true,
-): void => {
+): string => {
 	const connector = isLast ? '└── ' : '├── ';
-	console.log(prefix + connector + node.name);
+	let result = prefix + connector + node.name + '\n';
 
 	if (node.children && node.children.length > 0) {
 		const newPrefix = prefix + (isLast ? '    ' : '│   ');
 		node.children.forEach((child, index) => {
-			printTree(child, newPrefix, index === node.children!.length - 1);
+			result += printTree(
+				child,
+				newPrefix,
+				index === node.children!.length - 1,
+			);
 		});
 	}
+
+	return result;
 };
 
-// Example usage:
-// const pathToExplore = '/path/to/your/directory'; // Change this to your target directory
-// const tree = getDirectoryTree(pathToExplore, {depth: 2});
-// console.log(JSON.stringify(tree, null, 2));
+export const lsFunction = (path: string) => {
+	const tree = getDirectoryTree(path, {depth: 2});
+	if (!tree) {
+		return null;
+	}
+	return printTree(tree);
+};
