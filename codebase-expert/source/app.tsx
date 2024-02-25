@@ -1,23 +1,26 @@
 import React from 'react';
 import {Text} from 'ink';
-import {execSync} from 'child_process';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {CodebaseExpert} from './CodebaseExpert.js';
+import OpenAI from 'openai';
+import 'dotenv/config';
 
 type Props = {
-	name: string | undefined;
+	openaiApiKey: string | undefined;
 };
 const queryClient = new QueryClient();
 
-export default function App({name = 'Stranger'}: Props) {
-	const gitBranch = execSync('git branch --show-current').toString().trim();
+export default function App({openaiApiKey}: Props) {
+	const openaiApiKeyFromEnv = process.env['OPENAI_API_KEY'];
+
+	const openai = new OpenAI({
+		apiKey: openaiApiKey || openaiApiKeyFromEnv,
+	});
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Text>
-				Welcome to codebase-expert, {name}! You are on the {gitBranch} branch.
-			</Text>
-			<CodebaseExpert />
+			<Text>Welcome to codebase-expert. Let's analyze your codebase.</Text>
+			<CodebaseExpert openai={openai} />
 		</QueryClientProvider>
 	);
 }

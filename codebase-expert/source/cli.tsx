@@ -10,20 +10,20 @@ const cli = meow(
 	  $ codebase-expert
 
 	Options
-		--name  Your name
+		--openai-api-key Your OpenAI API key
 
 	Examples
-	  $ codebase-expert --name=Jane
+	  $ codebase-expert --openai-api-key='YOUR_API_KEY'
 	  Hello, Jane
 `,
 	{
 		importMeta: import.meta,
 		flags: {
-			name: {
+			openaiApiKey: {
 				type: 'string',
 			},
 		},
 	},
 );
 
-render(<App name={cli.flags.name} />);
+render(<App openaiApiKey={cli.flags.openaiApiKey} />);

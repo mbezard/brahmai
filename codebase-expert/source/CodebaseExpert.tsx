@@ -1,9 +1,14 @@
 import {Text, Box} from 'ink';
 import React from 'react';
 import {useCodebaseExpert} from './useCodebaseExpert.js';
+import OpenAI from 'openai';
 
-export const CodebaseExpert = () => {
-	const {isMacroArchitectureLoading} = useCodebaseExpert();
+type Props = {
+	openai: OpenAI;
+};
+
+export const CodebaseExpert = ({openai}: Props) => {
+	const {isMacroArchitectureLoading} = useCodebaseExpert(openai);
 	return (
 		<Box>
 			<Box>
