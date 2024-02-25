@@ -1,10 +1,19 @@
 import {RunnableToolFunctionWithParse} from 'openai/lib/RunnableFunction.mjs';
+import {lsFunction} from './lsfunction.js';
+import {catFunction} from './catFunction.js';
 
-export const lsFunction: RunnableToolFunctionWithParse<any> = {
+export const lsOpenaiFunction: RunnableToolFunctionWithParse<any> = {
 	type: 'function',
 	function: {
 		parse: JSON.parse,
-		function: (args: any) => console.log('lsFunction args', args),
+		function: (args: any) => {
+			if (!args.path) {
+				console.error('lsFunction: path is required');
+				return;
+			}
+
+			return lsFunction(args.path);
+		},
 		name: 'lsFunction',
 		description: 'Get the list of files in the current directory',
 		parameters: {
@@ -19,11 +28,18 @@ export const lsFunction: RunnableToolFunctionWithParse<any> = {
 	},
 };
 
-export const catFunction: RunnableToolFunctionWithParse<any> = {
+export const catOpenaiFunction: RunnableToolFunctionWithParse<any> = {
 	type: 'function',
 	function: {
 		parse: JSON.parse,
-		function: (args: any) => console.log('catFunction args', args),
+		function: (args: any) => {
+			if (!args.path) {
+				console.error('catFunction: path is required');
+				return;
+			}
+
+			return catFunction(args.path);
+		},
 		name: 'catFunction',
 		description: 'Get the content of a file',
 		parameters: {
@@ -38,4 +54,4 @@ export const catFunction: RunnableToolFunctionWithParse<any> = {
 	},
 };
 
-export const exploringTools = [lsFunction, catFunction];
+export const exploringTools = [lsOpenaiFunction, catOpenaiFunction];
