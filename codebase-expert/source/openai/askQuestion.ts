@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 import {QuestionWithFunction} from './question.type.js';
 import {codebaseExpertPrompt} from './prompts.js';
 import {RunnableToolFunctionWithParse} from 'openai/lib/RunnableFunction.mjs';
+import {exploringTools} from './exploringTools.js';
 
 export const askQuestion = async (
 	openai: OpenAI,
@@ -19,8 +20,9 @@ export const askQuestion = async (
 							description: 'Run the function',
 						},
 					},
+					...exploringTools,
 			  ]
-			: undefined;
+			: exploringTools;
 
 	const runner = openai.beta.chat.completions
 		.runTools({
@@ -32,6 +34,7 @@ export const askQuestion = async (
 					content: question.question,
 				},
 			],
+			tools,
 		})
 		.on('message', message => {
 			console.log('message', message);
