@@ -7,6 +7,6 @@ export const useSaveResults = () => {
 		fs.mkdirSync('results');
 	}
 
-	const results = JSON.stringify(allQuestions);
+	const results = JSON.stringify(allQuestions, null, 2);
 	fs.writeFileSync('results/results.json', results);
 };
