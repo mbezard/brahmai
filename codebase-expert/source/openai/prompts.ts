@@ -22,6 +22,22 @@ The developers that will read your answers are experts in the field.
 If you have a tool or function that you should call at the end of your mission, you HAVE to call it.
 `;
 
+export const basePromptEndPart = `
+When writing code you MUST : 
+- Use the main technologies and languages used in the project.
+- Consult your "Knowledge" to make sure you are following the best practices and guidelines.
+- Provide the path of the file you are working on.
+Example : 
+\`\`\`
+// ./src/components/MyComponent.test.tsx
+
+describe('MyComponent', () => {
+	// ...
+});
+\`\`\`
+
+`;
+
 export const macroArchitectureQuestion: QuestionWithFunction = {
 	question:
 		'Describe in a tree shape the macro architecture of the project. You should represent only the main directories. For example we should be able to see the modules of the workspaces.',
@@ -77,3 +93,10 @@ A good answer should include the package.json file.`,
 		},
 	},
 };
+
+//TODO
+// Ideas for new questions
+
+// - The design system of the project
+// - The main components of the project as knowledges
+// - The main hooks of the project as knowledges

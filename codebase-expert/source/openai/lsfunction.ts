@@ -98,7 +98,7 @@ const printTree = (
 
 export const lsFunction = (path: string) => {
 	if (!fs.existsSync(path)) {
-		return 'No such file or directory';
+		return 'No such file or directory. Please retry with a valid path (ex: ./)';
 	}
 	const tree = getDirectoryTree(path, {depth: 3});
 	if (!tree) {
