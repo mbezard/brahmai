@@ -30,10 +30,15 @@ export const fiveTestExamplesQuestions: QuestionWithFunction = {
 	function: {
 		name: 'getTestExamples',
 		parameters: {
-			type: 'array',
-			maxLength: 5,
-			items: {
-				type: 'string',
+			type: 'object',
+			properties: {
+				testExamples: {
+					description: 'The list of relative paths of the test examples files',
+					type: 'array',
+					items: {
+						type: 'string',
+					},
+				},
 			},
 		},
 	},
@@ -45,9 +50,16 @@ export const mainConfigFilesQuestion: QuestionWithFunction = {
 	function: {
 		name: 'getMainConfigFiles',
 		parameters: {
-			type: 'array',
-			items: {
-				type: 'string',
+			type: 'object',
+			properties: {
+				examples: {
+					type: 'array',
+					description:
+						'The list of relative paths of the main configuration files',
+					items: {
+						type: 'string',
+					},
+				},
 			},
 		},
 	},

@@ -17,30 +17,30 @@ export const askQuestion = async (
 							function: (args: any) => console.log('args', args),
 							parse: JSON.parse,
 							parameters: question.function.parameters,
-							description: 'Run the function',
+							description:
+								'Return the answer back to the user. You have to call this function at the end of your answer',
 						},
 					},
 					...exploringTools,
 			  ]
 			: exploringTools;
 
-	const runner = openai.beta.chat.completions
-		.runTools({
-			model: 'gpt-4-turbo-preview',
-			messages: [
-				{role: 'system', content: codebaseExpertPrompt},
-				{
-					role: 'user',
-					content: question.question,
-				},
-			],
-			tools,
-		})
-		.on('message', message => {
-			console.log('message', message);
-		});
+	const runner = openai.beta.chat.completions.runTools({
+		model: 'gpt-4-turbo-preview',
+		messages: [
+			{role: 'system', content: codebaseExpertPrompt},
+			{
+				role: 'user',
+				content: question.question,
+			},
+		],
+		tools,
+	});
+	// .on('message', message => {
+	// 	console.log('message', message);
+	// });
 	const finalContent = await runner.finalContent();
 
-	console.log('finalContent', finalContent);
+	// console.log('finalContent', finalContent);
 	return finalContent;
 };
