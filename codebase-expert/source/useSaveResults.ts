@@ -9,6 +9,28 @@ export const useSaveResults = () => {
 		fs.mkdirSync('results');
 	}
 
+	let configFilesPrompt = '';
+	try {
+		const mainConfigFile = JSON.parse(allQuestions.mainConfigFilesQuestion);
+		const mainConfigFileList = mainConfigFile['examples'] as string[];
+		mainConfigFileList.forEach((configFile: string) => {
+			if (
+				configFile.includes('package.json') ||
+				configFile.includes('eas') ||
+				configFile.includes('expo')
+			) {
+				const configFileContent = JSON.parse(
+					fs.readFileSync(configFile, 'utf-8'),
+				);
+				configFilesPrompt += `### ${configFile}\n\n\`\`\`json\n${JSON.stringify(
+					configFileContent,
+					null,
+					2,
+				)}\n\`\`\`\n\n`;
+			}
+		});
+	} catch (e) {}
+
 	const instructions = `${basePrompt}
 
 ## Project name: ${projectName}
@@ -24,6 +46,9 @@ ${allQuestions.macroArchitecture}
 <design system>
 ${allQuestions.designSystemQuestion}
 </design system>
+
+Here is the content of some of my configuration files:
+${configFilesPrompt}
 
 ${basePromptEndPart}
 `;
@@ -53,11 +78,8 @@ const gettingAndWritingFilesFromFunctionOutput = (
 	fileName: string,
 ) => {
 	try {
-		console.log('output', output);
 		const outputAsObject = JSON.parse(output);
-		console.log('outputAsObject', outputAsObject);
 		const outputAsList = outputAsObject[key] as string[];
-		console.log('outputAsList', outputAsList);
 
 		const content = outputAsList
 			.map((example: string) => {
