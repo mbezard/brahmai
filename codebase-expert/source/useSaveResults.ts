@@ -82,6 +82,7 @@ const gettingAndWritingFilesFromFunctionOutput = (
 		const outputAsList = outputAsObject[key] as string[];
 
 		const content = outputAsList
+			.filter((example: string) => !example.includes('.png'))
 			.map((example: string) => {
 				let content = '';
 				try {
