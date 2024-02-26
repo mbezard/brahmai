@@ -34,32 +34,32 @@ ${basePromptEndPart}
 		fs.mkdirSync('results/knowledgeFiles');
 	}
 
-	// if (!allQuestions.fiveTestExamplesQuestions) return;
+	if (!allQuestions.fiveTestExamplesQuestions) return;
 
-	// try {
-	// 	const testExamples = JSON.parse(allQuestions.fiveTestExamplesQuestions) as {
-	// 		testExamples: string[];
-	// 	};
+	try {
+		const testExamples =
+			typeof allQuestions.fiveTestExamplesQuestions === 'string'
+				? (JSON.parse(allQuestions.fiveTestExamplesQuestions) as {
+						testExamples: string[];
+				  })
+				: allQuestions.fiveTestExamplesQuestions;
 
-	// 	const testExamplesContent = testExamples['testExamples']
-	// 		.map((example: string) => {
-	// 			console.log('Reading', example);
-	// 			const content = fs.readFileSync(example, 'utf-8');
-	// 			return `## ${example}\n\n\`\`\`\n${content}\n\`\`\``;
-	// 		})
-	// 		.join('\n\n');
+		const testExamplesContent = testExamples['testExamples']
+			.map((example: string) => {
+				const content = fs.readFileSync(example, 'utf-8');
+				return `## ${example}\n\n\`\`\`\n${content}\n\`\`\``;
+			})
+			.join('\n\n');
 
-	// 	console.log('testExamplesContent', testExamplesContent);
-
-	// 	// fs.writeFileSync(
-	// 	// 	'results/knowledgeFiles/testExamples.md',
-	// 	// 	testExamplesContent,
-	// 	// );
-	// } catch (e) {
-	// 	console.error('Error saving test examples', e);
-	// 	fs.writeFileSync(
-	// 		'results/knowledgeFiles/testExamples.md',
-	// 		allQuestions.fiveTestExamplesQuestions,
-	// 	);
-	// }
+		fs.writeFileSync(
+			'results/knowledgeFiles/testExamples.md',
+			testExamplesContent,
+		);
+	} catch (e) {
+		console.error('Error saving test examples', e);
+		fs.writeFileSync(
+			'results/knowledgeFiles/testExamples.md',
+			allQuestions.fiveTestExamplesQuestions,
+		);
+	}
 };

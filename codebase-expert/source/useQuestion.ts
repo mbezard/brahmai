@@ -12,7 +12,10 @@ export const useQuestion = (openai: OpenAI, question: QuestionType) => {
 		mutationKey: ['macro-architecture'],
 		mutationFn: () => askQuestion(openai, question.questionWithFunction),
 		onSuccess: data => {
-			if (!data) throw new Error('No data');
+			if (!data) {
+				console.log('No data gathered from the question', question.key);
+				return;
+			}
 			saveAnyData(question.key, data);
 		},
 	});

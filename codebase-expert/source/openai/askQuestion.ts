@@ -4,11 +4,15 @@ import {codebaseExpertPrompt} from './prompts.js';
 import {RunnableToolFunctionWithParse} from 'openai/lib/RunnableFunction.mjs';
 import {exploringTools} from './exploringTools.js';
 
+type PrematureResultsRef = {
+	current: string | undefined;
+};
+
 export const askQuestion = async (
 	openai: OpenAI,
 	question: QuestionWithFunction,
 ) => {
-	const prematureResultsRef = {current: undefined};
+	const prematureResultsRef: PrematureResultsRef = {current: undefined};
 	const tools: RunnableToolFunctionWithParse<any>[] | undefined =
 		question.function
 			? [
@@ -19,7 +23,7 @@ export const askQuestion = async (
 								// console.log('FUNCTION CALLED AS LAST STEP');
 								// console.log('args', args);
 								// console.log('\n');
-								prematureResultsRef.current = args;
+								prematureResultsRef.current = JSON.stringify(args);
 								runner.done();
 							},
 							parse: JSON.parse,
