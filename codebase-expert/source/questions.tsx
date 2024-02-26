@@ -1,4 +1,5 @@
 import {
+	designSystemQuestion,
 	fiveTestExamplesQuestions,
 	macroArchitectureQuestion,
 	mainConfigFilesQuestion,
@@ -10,7 +11,8 @@ export type QuestionKey =
 	| 'macroArchitecture'
 	| 'mainTechnoAndLanguagesQuestion'
 	| 'fiveTestExamplesQuestions'
-	| 'mainConfigFilesQuestion';
+	| 'mainConfigFilesQuestion'
+	| 'designSystemQuestion';
 
 export type Question = {
 	title: string;
@@ -39,5 +41,10 @@ export const questions: Question[] = [
 		title: 'Analysis of the main configuration files of the codebase',
 		key: 'mainConfigFilesQuestion',
 		questionWithFunction: mainConfigFilesQuestion,
+	},
+	{
+		title: 'Analysis of the design system used in the codebase',
+		key: 'designSystemQuestion',
+		questionWithFunction: designSystemQuestion,
 	},
 ];
