@@ -7,12 +7,9 @@ export const lsOpenaiFunction: RunnableToolFunctionWithParse<any> = {
 	function: {
 		parse: JSON.parse,
 		function: (args: any) => {
-			if (!args.path) {
-				console.error('lsFunction: path is required');
-				return;
-			}
+			const path = args.path || '.';
 
-			return lsFunction(args.path);
+			return lsFunction(path);
 		},
 		name: 'lsFunction',
 		description: 'Get the list of files in the current directory',
