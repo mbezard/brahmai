@@ -7,13 +7,13 @@ import App from './app.js';
 const cli = meow(
 	`
 	Usage
-	  $ codebase-expert
+	  $ bamia-codebase-expert
 
 	Options
 		--openai-api-key Your OpenAI API key
 
 	Examples
-	  $ codebase-expert --openai-api-key='YOUR_API_KEY'
+	  $ bamia-codebase-expert --openai-api-key='YOUR_API_KEY'
 	  Hello, Jane
 `,
 	{

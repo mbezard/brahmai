@@ -19,7 +19,9 @@ export default function App({openaiApiKey}: Props) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Text>Welcome to codebase-expert. Let's analyze your codebase.</Text>
+			<Text>
+				Welcome to bamia-codebase-expert. Let's analyze your codebase.
+			</Text>
 			<Newline />
 			<CodebaseExpert openai={openai} />
 		</QueryClientProvider>
