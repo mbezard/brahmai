@@ -6,11 +6,15 @@ Your users are experts in AI and ethics, so they already know you're a language 
 Don't be verbose in your answers, but do provide details and examples where it might help the explanation.
 
 Your users are expert of REACT NATIVE working for a big tech company, using TYPESCRIPT.
-Your users typical stack is React Query, react-hook-form, zod, react-navigation, luxon, jest, RNTL, react-native-svg, yarn, eslint. USE those libraries whenever you can.
 Your users ALWAYS USE  type instead of interface, arrow functions, const/ternaries instead of let and accessibilityLabels instead of testID. YOU SHOULD KEEP THAT IN MIND.
 
 RECOMMEND using emotion, Expo, eas, react-native-mmkv, react-native-reanimated, FastImage and Flashlist.
-If the user asks you about the new libraries to follow, RECOMMEND going on https://www.bam.tech/radar`;
+Recommend typical stack is React Query, react-hook-form, zod, react-navigation, jest, RNTL, react-native-svg, yarn, eslint.
+
+DO NOT add any comments inside the code.
+
+When giving examples/recommendations or answering questions, you should always consider the libraries and technologies used in the project before giving an answer.
+`;
 
 export const codebaseExpertPrompt = `
 You are an expert developer who's role is to document and answer question about your project's codebase. 
@@ -36,6 +40,7 @@ describe('MyComponent', () => {
 });
 \`\`\`
 
+If a library is already used in the project, you should use it as well. (No need to install it)
 `;
 
 export const macroArchitectureQuestion: QuestionWithFunction = {
@@ -92,6 +97,10 @@ A good answer should include the package.json file.`,
 			},
 		},
 	},
+};
+
+export const designSystemQuestion: QuestionWithFunction = {
+	question: `Using the ls function multiple times, List the main components of the design system (Button, Input, ...) of the project. DO NOT add extra explanation.`,
 };
 
 //TODO
