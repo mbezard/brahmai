@@ -100,7 +100,7 @@ export const lsFunction = (path: string) => {
 	if (!fs.existsSync(path)) {
 		return 'No such file or directory';
 	}
-	const tree = getDirectoryTree(path, {depth: 2});
+	const tree = getDirectoryTree(path, {depth: 3});
 	if (!tree) {
 		return null;
 	}

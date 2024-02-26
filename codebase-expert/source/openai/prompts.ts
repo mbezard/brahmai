@@ -18,6 +18,8 @@ You should provide answer that's going to be added to the official project docum
 Try to be as precise as possible and provide examples when needed while keeping the answer as short as possible so be very concise.
 Do not provide any information that is not from the codebase.
 The developers that will read your answers are experts in the field.
+
+If you have a tool or function that you should call at the end of your mission, you HAVE to call it.
 `;
 
 export const macroArchitectureQuestion: QuestionWithFunction = {
@@ -31,8 +33,9 @@ export const mainTechnoAndLanguagesQuestion: QuestionWithFunction = {
 };
 
 export const fiveTestExamplesQuestions: QuestionWithFunction = {
-	question:
-		'Choose at random 5 test examples from the project and give me back the relative path of each file. Try to pick tests in different parts of the project.',
+	question: `Choose at random 5 test examples from the project and give me back the relative path of each file. 
+You HAVE to pick tests in different parts of the project, from the different modules and features.
+You should call the ls function multiple times to get the examples.`,
 	function: {
 		name: 'getTestExamples',
 		parameters: {
@@ -41,6 +44,7 @@ export const fiveTestExamplesQuestions: QuestionWithFunction = {
 				testExamples: {
 					description: 'The list of relative paths of the test examples files',
 					type: 'array',
+					maxItems: 5,
 					items: {
 						type: 'string',
 					},
@@ -51,8 +55,10 @@ export const fiveTestExamplesQuestions: QuestionWithFunction = {
 };
 
 export const mainConfigFilesQuestion: QuestionWithFunction = {
-	question:
-		'Give me the relative path of the main configuration files of the project. For example the files that are used to configure the linter, the formatter, the bundler, the testing framework, etc.',
+	question: `Give me the relative path of the main configuration files of the project. 
+For example the files that are used to configure typescript, expo, the app.json, etc.
+Do not put too many files. (Exclude the formatter or the linter config files for example).
+A good answer should include the package.json file.`,
 	function: {
 		name: 'getMainConfigFiles',
 		parameters: {
@@ -60,6 +66,7 @@ export const mainConfigFilesQuestion: QuestionWithFunction = {
 			properties: {
 				examples: {
 					type: 'array',
+					maxItems: 5,
 					description:
 						'The list of relative paths of the main configuration files',
 					items: {

@@ -8,17 +8,24 @@ export const askQuestion = async (
 	openai: OpenAI,
 	question: QuestionWithFunction,
 ) => {
+	const prematureResultsRef = {current: undefined};
 	const tools: RunnableToolFunctionWithParse<any>[] | undefined =
 		question.function
 			? [
 					{
 						type: 'function',
 						function: {
-							function: (args: any) => console.log('args', args),
+							function: (args, runner) => {
+								// console.log('FUNCTION CALLED AS LAST STEP');
+								// console.log('args', args);
+								// console.log('\n');
+								prematureResultsRef.current = args;
+								runner.done();
+							},
 							parse: JSON.parse,
 							parameters: question.function.parameters,
 							description:
-								'Return the answer back to the user. You have to call this function at the end of your answer',
+								'Return the answer back to the user. You MUST call this function as the last step of your mission.',
 						},
 					},
 					...exploringTools,
@@ -36,11 +43,11 @@ export const askQuestion = async (
 		],
 		tools,
 	});
-	// .on('message', message => {
-	// 	console.log('message', message);
-	// });
 	const finalContent = await runner.finalContent();
 
-	// console.log('finalContent', finalContent);
-	return finalContent;
+	const returnValue = question.function
+		? prematureResultsRef.current
+		: finalContent;
+
+	return returnValue;
 };
