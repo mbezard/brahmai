@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'ink';
+import {Newline, Text} from 'ink';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {CodebaseExpert} from './CodebaseExpert.js';
 import OpenAI from 'openai';
@@ -20,6 +20,7 @@ export default function App({openaiApiKey}: Props) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Text>Welcome to codebase-expert. Let's analyze your codebase.</Text>
+			<Newline />
 			<CodebaseExpert openai={openai} />
 		</QueryClientProvider>
 	);

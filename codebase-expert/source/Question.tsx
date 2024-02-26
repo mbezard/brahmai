@@ -14,7 +14,7 @@ export const Question = ({openai, question}: Props) => {
 	const {isLoading} = useQuestion(openai, question);
 	return (
 		<Box key={question.key}>
-			<Text>{question.title}</Text>
+			<Text>{question.title} </Text>
 			<Loader isLoading={isLoading} />
 		</Box>
 	);

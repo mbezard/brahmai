@@ -14,7 +14,7 @@ export const CodebaseExpert = ({openai}: Props) => {
 	const allQuestions = useGlobalState(state => state.allQuestions);
 	const areAllQuestionsAnswered = Object.values(allQuestions).every(Boolean);
 	return (
-		<Box>
+		<Box flexDirection="column">
 			{questions.map(question => {
 				return (
 					<Box key={question.key}>
