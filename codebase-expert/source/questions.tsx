@@ -1,6 +1,7 @@
 import {
 	designSystemQuestion,
 	fiveTestExamplesQuestions,
+	getSomeScreenImplementationQuestion,
 	macroArchitectureQuestion,
 	mainConfigFilesQuestion,
 	mainTechnoAndLanguagesQuestion,
@@ -12,7 +13,8 @@ export type QuestionKey =
 	| 'mainTechnoAndLanguagesQuestion'
 	| 'fiveTestExamplesQuestions'
 	| 'mainConfigFilesQuestion'
-	| 'designSystemQuestion';
+	| 'designSystemQuestion'
+	| 'getSomeScreenImplementationQuestion';
 
 export type Question = {
 	title: string;
@@ -46,5 +48,10 @@ export const questions: Question[] = [
 		title: 'Analysis of the design system used in the codebase',
 		key: 'designSystemQuestion',
 		questionWithFunction: designSystemQuestion,
+	},
+	{
+		title: 'Getting some examples of screen implementations from the codebase',
+		key: 'getSomeScreenImplementationQuestion',
+		questionWithFunction: getSomeScreenImplementationQuestion,
 	},
 ];

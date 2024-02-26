@@ -34,32 +34,47 @@ ${basePromptEndPart}
 		fs.mkdirSync('results/knowledgeFiles');
 	}
 
-	if (!allQuestions.fiveTestExamplesQuestions) return;
+	gettingAndWritingFilesFromFunctionOutput(
+		allQuestions.fiveTestExamplesQuestions,
+		'testExamples',
+		'testExamples',
+	);
 
+	gettingAndWritingFilesFromFunctionOutput(
+		allQuestions.getSomeScreenImplementationQuestion,
+		'examples',
+		'screenImplementations',
+	);
+};
+
+const gettingAndWritingFilesFromFunctionOutput = (
+	output: string,
+	key: string,
+	fileName: string,
+) => {
 	try {
-		const testExamples =
-			typeof allQuestions.fiveTestExamplesQuestions === 'string'
-				? (JSON.parse(allQuestions.fiveTestExamplesQuestions) as {
-						testExamples: string[];
-				  })
-				: allQuestions.fiveTestExamplesQuestions;
+		console.log('output', output);
+		const outputAsObject = JSON.parse(output);
+		console.log('outputAsObject', outputAsObject);
+		const outputAsList = outputAsObject[key] as string[];
+		console.log('outputAsList', outputAsList);
 
-		const testExamplesContent = testExamples['testExamples']
+		const content = outputAsList
 			.map((example: string) => {
-				const content = fs.readFileSync(example, 'utf-8');
+				let content = '';
+				try {
+					content = fs.readFileSync(example, 'utf-8');
+				} catch (e) {
+					// console.error(`Error reading file ${example}`, e);
+					content = '';
+				}
 				return `## ${example}\n\n\`\`\`\n${content}\n\`\`\``;
 			})
 			.join('\n\n');
 
-		fs.writeFileSync(
-			'results/knowledgeFiles/testExamples.md',
-			testExamplesContent,
-		);
+		fs.writeFileSync(`results/knowledgeFiles/${fileName}.md`, content);
 	} catch (e) {
-		console.error('Error saving test examples', e);
-		fs.writeFileSync(
-			'results/knowledgeFiles/testExamples.md',
-			allQuestions.fiveTestExamplesQuestions,
-		);
+		console.error(`Error ${fileName}`, e);
+		fs.writeFileSync(`results/knowledgeFiles/${fileName}.md`, output);
 	}
 };

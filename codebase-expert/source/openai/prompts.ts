@@ -103,6 +103,26 @@ export const designSystemQuestion: QuestionWithFunction = {
 	question: `Using the ls function multiple times, List the main components of the design system (Button, Input, ...) of the project. DO NOT add extra explanation.`,
 };
 
+export const getSomeScreenImplementationQuestion: QuestionWithFunction = {
+	question: `Using the ls function multiple times, Give some examples of the implementation of the screens of the project. DO NOT add extra explanation.`,
+	function: {
+		name: 'getSomeExampleFilePaths',
+		parameters: {
+			type: 'object',
+			properties: {
+				examples: {
+					type: 'array',
+					maxItems: 5,
+					description:
+						'The list of relative paths of some example screen files',
+					items: {
+						type: 'string',
+					},
+				},
+			},
+		},
+	},
+};
 //TODO
 // Ideas for new questions
 

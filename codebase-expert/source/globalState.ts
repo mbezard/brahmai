@@ -13,6 +13,7 @@ export const useGlobalState = create<GlobalState>()(set => ({
 		fiveTestExamplesQuestions: '',
 		mainConfigFilesQuestion: '',
 		designSystemQuestion: '',
+		getSomeScreenImplementationQuestion: '',
 	},
 	saveAnyData: (key, data) =>
 		set(state => ({
