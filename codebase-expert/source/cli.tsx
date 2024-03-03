@@ -3,6 +3,7 @@ import React from 'react';
 import {render} from 'ink';
 import meow from 'meow';
 import App from './app.js';
+import {flagsStateRef} from './flagsState.js';
 
 const cli = meow(
 	`
@@ -29,5 +30,9 @@ const cli = meow(
 		},
 	},
 );
+
+if (cli.flags.extraInstructions) {
+	flagsStateRef.extraInstructions = cli.flags.extraInstructions;
+}
 
 render(<App cliFlags={cli.flags} />);

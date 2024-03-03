@@ -14,7 +14,7 @@ export const useQuestion = (question: QuestionType) => {
 		mutationFn: () => askQuestion(openai, question.questionWithFunction),
 		onSuccess: data => {
 			if (!data) {
-				console.log('No data gathered from the question', question.key);
+				// console.log('No data gathered from the question', question.key);
 				return;
 			}
 			saveAnyData(question.key, data);
