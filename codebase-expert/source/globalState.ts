@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {QuestionKey} from './questions.js';
+import {QuestionKey} from './modules/question/questions.js';
 
 interface GlobalState {
 	allQuestions: Record<QuestionKey, string>;

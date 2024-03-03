@@ -1,9 +1,9 @@
 import {Box, Text} from 'ink';
 import React from 'react';
-import {questions} from './questions.js';
-import {Question} from './Question.js';
+import {questions} from './modules/question/questions.js';
 import {useGlobalState} from './globalState.js';
-import {SavingResults} from './SavingResults.js';
+import {SavingResults} from './results/SavingResults.js';
+import {Question} from './modules/question/Question.js';
 
 export const CodebaseExpert = () => {
 	const allQuestions = useGlobalState(state => state.allQuestions);

@@ -1,6 +1,6 @@
-import {useGlobalState} from './globalState.js';
+import {useGlobalState} from '../globalState.js';
 import fs from 'fs';
-import {basePrompt, basePromptEndPart} from './openai/prompts.js';
+import {basePrompt, basePromptEndPart} from '../modules/openai/prompts.js';
 
 export const useSaveResults = () => {
 	const projectName = process.cwd().split('/').pop();

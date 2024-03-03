@@ -5,8 +5,8 @@ import {
 	macroArchitectureQuestion,
 	mainConfigFilesQuestion,
 	mainTechnoAndLanguagesQuestion,
-} from './openai/prompts.js';
-import {QuestionWithFunction} from './openai/question.type.js';
+} from '../openai/prompts.js';
+import {QuestionWithFunction} from '../openai/question.type.js';
 
 export type QuestionKey =
 	| 'macroArchitecture'
