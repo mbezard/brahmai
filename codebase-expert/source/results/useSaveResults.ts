@@ -1,6 +1,10 @@
 import {useGlobalState} from '../globalState.js';
 import fs from 'fs';
-import {basePrompt, basePromptEndPart} from '../modules/openai/prompts.js';
+import {
+	basePromptExpertPrompting,
+	basePromptEndPart,
+	basePromptDevBestPractices,
+} from '../modules/openai/prompts.js';
 import {gettingAndWritingFilesFromFunctionOutput} from './gettingAndWritingFilesFromFunctionOutput.js';
 
 export const useSaveResults = () => {
@@ -32,7 +36,7 @@ export const useSaveResults = () => {
 		});
 	} catch (e) {}
 
-	const instructions = `${basePrompt}
+	const instructions = `${basePromptExpertPrompting}
 
 ## Project name: ${projectName}
 
@@ -50,6 +54,8 @@ ${allQuestions.designSystemQuestion}
 
 Here is the content of some of my configuration files:
 ${configFilesPrompt}
+
+${basePromptDevBestPractices}
 
 ${basePromptEndPart}
 `;
