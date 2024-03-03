@@ -1,11 +1,12 @@
 import {useMutation} from '@tanstack/react-query';
 import {askQuestion} from './openai/askQuestion.js';
 import {useEffect, useRef} from 'react';
-import OpenAI from 'openai';
 import {Question as QuestionType} from './questions.js';
 import {useGlobalState} from './globalState.js';
+import {useOpenai} from './openai/OpenaiClientProvider.js';
 
-export const useQuestion = (openai: OpenAI, question: QuestionType) => {
+export const useQuestion = (question: QuestionType) => {
+	const openai = useOpenai();
 	const hasBeenAskedRef = useRef(false);
 	const saveAnyData = useGlobalState(state => state.saveAnyData);
 	const {isPending: isLoading, mutateAsync} = useMutation({
