@@ -10,11 +10,12 @@ const cli = meow(
 	  $ bamia-codebase-expert
 
 	Options
-		--openai-api-key Your OpenAI API key
+		--openaiApiKey Your OpenAI API key
+		--extraInstructions Extra instructions to pass to the codebase expert
 
 	Examples
-	  $ bamia-codebase-expert --openai-api-key='YOUR_API_KEY'
-	  Hello, Jane
+	  $ bamia-codebase-expert --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
+	  
 `,
 	{
 		importMeta: import.meta,
@@ -22,8 +23,11 @@ const cli = meow(
 			openaiApiKey: {
 				type: 'string',
 			},
+			extraInstructions: {
+				type: 'string',
+			},
 		},
 	},
 );
 
-render(<App openaiApiKey={cli.flags.openaiApiKey} />);
+render(<App cliFlags={cli.flags} />);

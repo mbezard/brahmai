@@ -13,13 +13,13 @@ $ npm install --global bamia-codebase-expert
 ```
 $ bamia-codebase-expert --help
 
-  Usage
-    $ bamia-codebase-expert
+ Usage
+	  $ bamia-codebase-expert
 
-  Options
-    --name  Your name
+	Options
+		--openaiApiKey Your OpenAI API key
+		--extraInstructions Extra instructions to pass to the codebase expert
 
-  Examples
-    $ bamia-codebase-expert --name=Jane
-    Hello, Jane
+	Examples
+	  $ bamia-codebase-expert --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
 ```
