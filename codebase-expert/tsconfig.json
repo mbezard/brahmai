@@ -4,5 +4,5 @@
 		"outDir": "dist"
 	},
 	"include": ["source/**/*.ts", "source/**/*.tsx"],
-	"exclude": ["*/node_modules/**", "dist"]
+	"exclude": ["*/node_modules/**", "dist", "tsconfig.json"]
 }
