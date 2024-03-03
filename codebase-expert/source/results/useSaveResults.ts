@@ -14,29 +14,7 @@ export const useSaveResults = () => {
 		fs.mkdirSync('results');
 	}
 
-	let configFilesPrompt = '';
-	try {
-		const mainConfigFile = JSON.parse(allQuestions.mainConfigFilesQuestion);
-		const mainConfigFileList = mainConfigFile['examples'] as string[];
-		mainConfigFileList.forEach((configFile: string) => {
-			if (
-				configFile.includes('package.json') ||
-				configFile.includes('eas') ||
-				configFile.includes('expo')
-			) {
-				const configFileContent = JSON.parse(
-					fs.readFileSync(configFile, 'utf-8'),
-				);
-				configFilesPrompt += `### ${configFile}\n\n\`\`\`json\n${JSON.stringify(
-					configFileContent,
-					null,
-					2,
-				)}\n\`\`\`\n\n`;
-			}
-		});
-	} catch (e) {}
-
-	const instructions = `${basePromptExpertPrompting}
+	const instructionsStart = `${basePromptExpertPrompting}
 
 ## Project name: ${projectName}
 
@@ -50,15 +28,51 @@ ${allQuestions.macroArchitecture}
 
 <design system>
 ${allQuestions.designSystemQuestion}
-</design system>
+</design system>`;
 
-Here is the content of some of my configuration files:
-${configFilesPrompt}
-
-${basePromptDevBestPractices}
+	const instructionsEnd = `${basePromptDevBestPractices}
 
 ${basePromptEndPart}
 `;
+
+	let configFilesContent: string[] = [];
+	try {
+		const mainConfigFile = JSON.parse(allQuestions.mainConfigFilesQuestion);
+		const mainConfigFileList = mainConfigFile['examples'] as string[];
+		mainConfigFileList.forEach((configFile: string) => {
+			if (configFile.includes('env') || configFile.includes('secret')) return;
+			if (configFile.includes('.png')) return;
+
+			const configFileContent = fs.readFileSync(configFile, 'utf-8');
+			configFilesContent.push(
+				`### ${configFile}\n\`\`\`\n${JSON.stringify(
+					configFileContent,
+					null,
+					2,
+				)}\n\`\`\`\n\n`,
+			);
+		});
+	} catch (e) {}
+
+	// Add config files without exceeding the character limit of 8000 characters
+	let configFilesPrompt =
+		'Here is the content of some of my configuration files:';
+
+	configFilesPrompt += configFilesContent.reduce((acc, content) => {
+		if (
+			acc.length +
+				content.length +
+				instructionsStart.length +
+				instructionsEnd.length <
+			8000
+		) {
+			acc += content;
+		}
+		return acc;
+	}, '');
+
+	const instructions = `${instructionsStart}\n${configFilesPrompt}\n${instructionsEnd}`;
+
 	fs.writeFileSync('results/instructions.md', instructions);
 
 	// ***** KNOWLEDGE FILES *****
