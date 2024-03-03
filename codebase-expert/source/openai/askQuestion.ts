@@ -3,6 +3,7 @@ import {QuestionWithFunction} from './question.type.js';
 import {codebaseExpertPrompt} from './prompts.js';
 import {RunnableToolFunctionWithParse} from 'openai/lib/RunnableFunction.mjs';
 import {exploringTools} from './exploringTools.js';
+import {model} from './constant.js';
 
 type PrematureResultsRef = {
 	current: string | undefined;
@@ -37,7 +38,7 @@ export const askQuestion = async (
 			: exploringTools;
 
 	const runner = openai.beta.chat.completions.runTools({
-		model: 'gpt-4-turbo-preview',
+		model: model,
 		messages: [
 			{role: 'system', content: codebaseExpertPrompt},
 			{
