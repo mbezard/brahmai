@@ -8,14 +8,14 @@ import {flagsStateRef} from './flagsState.js';
 const cli = meow(
 	`
 	Usage
-	  $ cobalt
+	  $ cobalt-ai
 
 	Options
 		--openaiApiKey Your OpenAI API key
 		--extraInstructions Extra instructions to pass to the codebase expert
 
 	Examples
-	  $ cobalt --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
+	  $ cobalt-ai --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
 	  
 `,
 	{
