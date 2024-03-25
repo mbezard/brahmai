@@ -22,9 +22,7 @@ export default function App({cliFlags}: Props) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<OpenaiProvider openai={openai}>
-				<Text>
-					Welcome to bamia-codebase-expert. Let's analyze your codebase.
-				</Text>
+				<Text>Welcome to cobalt. Let's analyze your codebase.</Text>
 				<Newline />
 				<CodebaseExpert />
 			</OpenaiProvider>

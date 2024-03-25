@@ -1,5 +1,5 @@
 {
-	"name": "bamia-codebase-expert",
+	"name": "cobalt",
 	"version": "1.1.1",
 	"license": "MIT",
 	"bin": "dist/cli.js",

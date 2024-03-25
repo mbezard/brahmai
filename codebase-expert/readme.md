@@ -1,25 +1,25 @@
-# bamia-codebase-expert
+# cobalt
 
 ## Install
 
 ```bash
-$ npm install --global bamia-codebase-expert
+$ npm install --global cobalt
 # or
-$ yarn global add bamia-codebase-expert
+$ yarn global add cobalt
 ```
 
 ## CLI
 
 ```
-$ bamia-codebase-expert --help
+$ cobalt --help
 
  Usage
-	  $ bamia-codebase-expert
+	  $ cobalt
 
 	Options
 		--openaiApiKey Your OpenAI API key
 		--extraInstructions Extra instructions to pass to the codebase expert
 
 	Examples
-	  $ bamia-codebase-expert --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
+	  $ cobalt --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
 ```

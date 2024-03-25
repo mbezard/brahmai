@@ -8,14 +8,14 @@ import {flagsStateRef} from './flagsState.js';
 const cli = meow(
 	`
 	Usage
-	  $ bamia-codebase-expert
+	  $ cobalt
 
 	Options
 		--openaiApiKey Your OpenAI API key
 		--extraInstructions Extra instructions to pass to the codebase expert
 
 	Examples
-	  $ bamia-codebase-expert --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
+	  $ cobalt --openaiApiKey='YOUR_API_KEY' --extraInstructions="Don't mention the project name"
 	  
 `,
 	{
